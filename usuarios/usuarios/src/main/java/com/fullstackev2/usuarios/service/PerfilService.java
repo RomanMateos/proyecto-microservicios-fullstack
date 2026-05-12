@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,12 +26,11 @@ public class PerfilService {
         Perfil guardado = perfilRepository.save(perfil);
         return PerfilMapper.toDTO(guardado);
     }
-    public PerfilDTO buscarPorId(Integer id){
-        Perfil perfil = perfilRepository.findById(id).orElse(null);
-        if(perfil ==null)return null;
-        return PerfilMapper.toDTO(perfil);
+    public Optional<PerfilDTO> buscarPorId(Integer id){
+        return perfilRepository.findById(id)
+                .map(PerfilMapper::toDTO);
     }
-    public  PerfilDTO actualizarPorId(Integer id, PerfilDTO dto){
+    public  Optional<PerfilDTO> actualizarPorId(Integer id, PerfilDTO dto){
         Perfil perfil = perfilRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No existe el perfil com este id"));
         perfil.setNombrePerfil(dto.getNombrePerfil());
@@ -40,9 +40,13 @@ public class PerfilService {
         perfil.setFechaNacimiento(dto.getFechaNacimiento());
         perfil.setActivo(dto.isActivo());
         Perfil actualizado = perfilRepository.save(perfil);
-        return PerfilMapper.toDTO(actualizado);
+        return Optional.of(PerfilMapper.toDTO(actualizado));
     }
-    public void eliminarPorId(Integer id){
-        perfilRepository.deleteById(id);
+    public boolean eliminarPorId(Integer id){
+        if(perfilRepository.existsById(id)) {
+            perfilRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,14 +28,12 @@ public class UsuarioService {
         Usuario guardado = usuarioRepository.save(usuario);
         return UsuarioMapper.toDTO(guardado);
     }
-    public UsuarioDTO buscarPorId(Integer id){
-        Usuario usuario = usuarioRepository.findById(id).orElse(null);
-        if(usuario == null) return null;
-
-        return UsuarioMapper.toDTO(usuario);
+    public Optional<UsuarioDTO> buscarPorId(Integer id){
+        return usuarioRepository.findById(id)
+                .map(UsuarioMapper::toDTO);
 
     }
-    public UsuarioDTO actualizarPorId(Integer id, UsuarioDTO dto){
+    public Optional<UsuarioDTO> actualizarPorId(Integer id, UsuarioDTO dto){
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
@@ -46,11 +45,15 @@ public class UsuarioService {
         usuario.setActivo(dto.isActivo());
 
         Usuario actualizado = usuarioRepository.save(usuario);
-        return UsuarioMapper.toDTO(actualizado);
+        return Optional.of(UsuarioMapper.toDTO(actualizado));
     }
-    public void eliminarPorId(Integer id){
-        usuarioRepository.deleteById(id);
-    }
+    public boolean eliminarPorId(Integer id){
+        if(usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
+            return true;
+        }
+        return false;
 
 
+}
 }
