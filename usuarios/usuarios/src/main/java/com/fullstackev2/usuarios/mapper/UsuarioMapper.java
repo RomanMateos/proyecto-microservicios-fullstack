@@ -12,7 +12,7 @@ public class UsuarioMapper {
                 usuario.getDireccion(),
                 usuario.getEdad(),
                 usuario.getFechaNacimiento(),
-                usuario.isActivo()
+                usuario.getActivo()
 
         );
     }
@@ -25,7 +25,7 @@ public class UsuarioMapper {
             usuario.setDireccion(dto.getDireccion());
             usuario.setEdad(dto.getEdad());
             usuario.setFechaNacimiento(dto.getFechaNacimiento());
-            usuario.setActivo(dto.isActivo());
+            usuario.setActivo(dto.getActivo());
 
             return usuario;
 

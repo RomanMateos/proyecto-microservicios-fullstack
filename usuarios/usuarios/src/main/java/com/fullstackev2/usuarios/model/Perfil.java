@@ -26,7 +26,7 @@ public class Perfil {
     private String email;
     private Integer edad;
     private LocalDate fechaNacimiento;
-    boolean activo;
+    private Boolean activo;
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "usuario_id")

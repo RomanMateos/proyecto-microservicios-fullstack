@@ -18,7 +18,7 @@ public class PerfilController {
     @Autowired
     private PerfilService perfilService;
     @GetMapping("/perfiles")
-    public ResponseEntity<List<PerfilDTO>> perfiles(){
+    public ResponseEntity<List<PerfilDTO>> listarPerfiles(){
         List<PerfilDTO> perfil = perfilService.obtenerPerfiles();
         return ResponseEntity.ok(perfil);
     }

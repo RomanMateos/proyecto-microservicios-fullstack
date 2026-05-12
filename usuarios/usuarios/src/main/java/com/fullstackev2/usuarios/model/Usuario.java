@@ -25,7 +25,7 @@ public class Usuario {
     private String direccion;
     private Integer edad;
     private LocalDate fechaNacimiento;
-    private boolean activo;
+    private Boolean activo;
     @JsonManagedReference
     @OneToMany(mappedBy = "usuario")
     private List<Perfil> perfiles;

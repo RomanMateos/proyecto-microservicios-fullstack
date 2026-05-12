@@ -13,8 +13,8 @@ public class PerfilMapper {
                 perfil.getEmail(),
                 perfil.getEdad(),
                 perfil.getFechaNacimiento(),
-                perfil.isActivo(),
-                perfil.getUsuario().getId()
+                perfil.getActivo(),
+                perfil.getUsuario() != null ? perfil.getUsuario().getId(): null
         );
     }
     public static Perfil toEntity(PerfilDTO perfilDTO) {
@@ -26,7 +26,7 @@ public class PerfilMapper {
         perfil.setEmail(perfilDTO.getEmail());
         perfil.setEdad(perfilDTO.getEdad());
         perfil.setFechaNacimiento(perfilDTO.getFechaNacimiento());
-        perfil.setActivo(perfilDTO.isActivo());
+        perfil.setActivo(perfilDTO.getActivo());
 
         return perfil;
     }

@@ -21,16 +21,16 @@ public class PerfilDTO {
     @NotBlank(message="El alias no puede estar vacio")
     @Size(min=5,max=30,message="El alias no puede tener menos de 5 caracteres ni mas de 30")
     private String alias;
-    @Email
+    @Email(message="El correo esta mal ingresado")
     @NotBlank(message="El campo mail no puede estar vacio")
     private String email;
     @Min(value=1,message="Debes ingresar una edad valida")
     @Max(value=120,message="Debes ingresar uan edad valida")
     private Integer edad;
-    @Past
-    @NotNull
+    @Past(message="La fecha no puede ser hoy ni posterior")
+    @NotNull(message="La fecha no puede estar en blanco")
     private LocalDate fechaNacimiento;
-    private boolean activo;
+    private Boolean activo;
 
     private Integer usuarioId;
 }

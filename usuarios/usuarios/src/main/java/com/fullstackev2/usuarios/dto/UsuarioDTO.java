@@ -27,9 +27,9 @@ public class UsuarioDTO {
     @Min(value=0)
     @Max(value=99)
     private Integer edad;
-    @NotNull
+    @NotNull(message="La fecha no puede estar en blanco")
     @Past(message="La fecha debe ser anterior a la de hoy")
     private LocalDate fechaNacimiento;
-    private boolean activo;
+    private Boolean activo;
 
 }
