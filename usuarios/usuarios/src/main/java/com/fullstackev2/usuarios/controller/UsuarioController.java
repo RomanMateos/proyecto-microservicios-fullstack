@@ -43,4 +43,9 @@ public class UsuarioController {
         if(eliminado) {return ResponseEntity.noContent().build();}
         return ResponseEntity.notFound().build();
     }
+    @GetMapping("/usuarios/buscar")
+    public ResponseEntity<List<UsuarioDTO>> obtenerUsuarioPorEmail(@RequestParam String email, @RequestParam boolean activo){
+        List<UsuarioDTO> usuarios = usuarioService.buscarPorEmailYActivo(email,activo);
+        return ResponseEntity.ok(usuarios);
+    }
 }

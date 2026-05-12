@@ -53,7 +53,12 @@ public class UsuarioService {
             return true;
         }
         return false;
-
-
 }
+    public List<UsuarioDTO> buscarPorEmailYActivo(String email,Boolean activo){
+        return usuarioRepository.findByEmailAndActivo(email,activo)
+                .stream()
+                .map(UsuarioMapper::toDTO)
+                .collect(Collectors.toList());
+
+    }
 }
