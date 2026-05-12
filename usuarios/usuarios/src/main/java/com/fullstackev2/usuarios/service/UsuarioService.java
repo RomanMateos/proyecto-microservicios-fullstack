@@ -42,7 +42,7 @@ public class UsuarioService {
         usuario.setDireccion(dto.getDireccion());
         usuario.setEdad(dto.getEdad());
         usuario.setFechaNacimiento(dto.getFechaNacimiento());
-        usuario.setActivo(dto.isActivo());
+        usuario.setActivo(dto.getActivo());
 
         Usuario actualizado = usuarioRepository.save(usuario);
         return Optional.of(UsuarioMapper.toDTO(actualizado));

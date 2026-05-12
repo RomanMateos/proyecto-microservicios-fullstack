@@ -19,14 +19,19 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column(nullable = false)
     private String nombreCompleto;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String direccion;
+    @Column(nullable = false)
     private Integer edad;
+    @Column(nullable = false)
     private LocalDate fechaNacimiento;
+    @Column(nullable = false)
     private Boolean activo;
     @JsonManagedReference
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL)
     private List<Perfil> perfiles;
 }

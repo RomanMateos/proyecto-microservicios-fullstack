@@ -14,8 +14,7 @@ import java.util.ArrayList;
 @Component
 @Order(1)
 public class UsuarioRunner implements CommandLineRunner {
-    @Autowired
-    private PerfilRepository perfilRepository;
+
     @Autowired
     private UsuarioRepository usuarioRepository;
     @Override
