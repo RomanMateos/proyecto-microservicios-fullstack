@@ -20,7 +20,7 @@ public class CategoriaMapper {
         categoria.setNombre(categoriaDTO.getNombre());
         categoria.setDescripcion(categoriaDTO.getDescripcion());
         categoria.setActivo(categoriaDTO.getActivo());
-        categoria.setCantidadProductos(categoriaDTO.getCantidadProductos());
+        categoria.setCantidadProductos(categoriaDTO.getCantidad());
         categoria.setFechaCreacion(categoriaDTO.getFechaCreacion());
         return categoria;
     }

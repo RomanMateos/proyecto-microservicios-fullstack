@@ -39,13 +39,18 @@ public class ProductoService {
     }
     public Optional<ProductoDTO> actualizarPorId(Integer id, ProductoDTO dto) {
         Producto producto = productoRepository.findById(id)
-                .orElseThrow(() ->new RuntimeException("Producto no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
         producto.setNombreProducto(dto.getNombreProducto());
         producto.setDescripcion(dto.getDescripcion());
         producto.setPrecio(dto.getPrecio());
         producto.setStock(dto.getStock());
         producto.setFechaVencimiento(dto.getFechaVencimiento());
         producto.setDisponible(dto.getDisponible());
+        producto.setCategoria(categoria);
+
         Producto actualizado = productoRepository.save(producto);
         return Optional.of(ProductoMapper.toDTO(actualizado));
     }
