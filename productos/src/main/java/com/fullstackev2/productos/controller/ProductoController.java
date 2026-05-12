@@ -47,5 +47,10 @@ public class ProductoController {
         return ResponseEntity.notFound().build();
 
     }
+    @GetMapping("/productos/buscar")
+    public ResponseEntity<List<ProductoDTO>> buscarPorNombreYPrecio(@RequestParam String nombreProducto,@RequestParam Double precio){
+        List<ProductoDTO> productos = productoService.buscarPorNombreYPrecio(nombreProducto,precio);
+        return ResponseEntity.ok(productos);
+    }
 
 }
