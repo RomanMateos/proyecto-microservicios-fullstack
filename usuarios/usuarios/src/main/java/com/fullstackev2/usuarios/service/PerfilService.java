@@ -40,12 +40,15 @@ public class PerfilService {
     public  Optional<PerfilDTO> actualizarPorId(Integer id, PerfilDTO dto){
         Perfil perfil = perfilRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No existe el perfil com este id"));
+        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+                        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         perfil.setNombrePerfil(dto.getNombrePerfil());
         perfil.setAlias(dto.getAlias());
         perfil.setEmail(dto.getEmail());
         perfil.setEdad(dto.getEdad());
         perfil.setFechaNacimiento(dto.getFechaNacimiento());
         perfil.setActivo(dto.getActivo());
+        perfil.setUsuario(usuario);
         Perfil actualizado = perfilRepository.save(perfil);
         return Optional.of(PerfilMapper.toDTO(actualizado));
     }
