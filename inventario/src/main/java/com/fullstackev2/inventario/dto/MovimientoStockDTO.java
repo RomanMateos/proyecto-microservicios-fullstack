@@ -14,7 +14,7 @@ public class MovimientoStockDTO {
     private Integer id;
 
     @NotBlank(message="El tipo de movimiento no puede ser blanco" )
-    @Size(min=5,max=30,message="Ingrese un tipo de movimiento valido")
+    @Pattern(regexp= "Entrada|Salida",message="Solo se acepta Entrada o Salida")
     private String tipoMovimiento;
     @NotBlank(message="El motivo no puede estar en blanco")
     @Size(min=6,max=60,message="Ingrese un motivo mas extenso")

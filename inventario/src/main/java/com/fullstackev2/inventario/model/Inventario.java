@@ -22,13 +22,15 @@ public class Inventario {
     @Column(nullable=false)
     private String seccion;
     @Column(nullable=false)
-    private Integer cantidadDisponibles;
+    private Integer cantidadDisponible;
     @Column(nullable=false)
     private String ubicacion;
     @Column(nullable=false)
     private Boolean activo;
     @Column(nullable=false)
     private LocalDate fechaActualizacion;
+    @Column(nullable=false)
+    private Integer productoId;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "inventario", cascade = CascadeType.ALL)

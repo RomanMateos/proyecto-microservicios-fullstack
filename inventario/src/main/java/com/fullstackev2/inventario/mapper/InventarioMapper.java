@@ -8,20 +8,22 @@ public class InventarioMapper {
         return new InventarioDTO(
                 inventario.getId(),
                 inventario.getSeccion(),
-                inventario.getCantidadDisponibles(),
+                inventario.getCantidadDisponible(),
                 inventario.getUbicacion(),
                 inventario.getActivo(),
-                inventario.getFechaActualizacion()
+                inventario.getFechaActualizacion(),
+                inventario.getProductoId()
         );
     }
     public static Inventario toEntity(InventarioDTO inventarioDTO){
         Inventario inventario = new Inventario();
         inventario.setId(inventarioDTO.getId());
         inventario.setSeccion(inventarioDTO.getSeccion());
-        inventario.setCantidadDisponibles(inventarioDTO.getCantidadDisponible());
+        inventario.setCantidadDisponible(inventarioDTO.getCantidadDisponible());
         inventario.setUbicacion(inventarioDTO.getUbicacion());
         inventario.setActivo(inventarioDTO.getActivo());
         inventario.setFechaActualizacion(inventarioDTO.getFechaActualizacion());
+        inventario.setProductoId(inventarioDTO.getProductoId());
 
         return inventario;
     }

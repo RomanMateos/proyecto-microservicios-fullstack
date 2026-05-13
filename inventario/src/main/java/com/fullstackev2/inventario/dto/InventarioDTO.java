@@ -27,7 +27,8 @@ public class InventarioDTO {
     @NotNull(message="La fecha de actualizacion no puede ser nula")
     @FutureOrPresent(message="La fecha de actualizacion no puede ser anterior a hoy")
     private LocalDate fechaActualizacion;
-
+    @NotNull(message="El producto no puede ser nulo")
+    private Integer productoId;
 
 
 }
