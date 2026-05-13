@@ -11,7 +11,9 @@ public class PagoMapper {
                 pago.getDetalle(),
                 pago.getMontoPago(),
                 pago.getFechaPago(),
-                pago.getAceptado()
+                pago.getAceptado(),
+                pago.getPedidoId()
+
         );
     }
     public static Pago toEntity(PagoDTO dto){
@@ -22,6 +24,7 @@ public class PagoMapper {
         pago.setMontoPago(dto.getMontoPago());
         pago.setFechaPago(dto.getFechaPago());
         pago.setAceptado(dto.getAceptado());
+        pago.setPedidoId(dto.getPedidoId());
         return pago;
     }
 }

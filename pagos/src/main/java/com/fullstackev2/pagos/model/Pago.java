@@ -23,5 +23,6 @@ public class Pago {
     private LocalDate fechaPago;
     private Boolean aceptado;
 
+    private Integer pedidoId;
 
 }

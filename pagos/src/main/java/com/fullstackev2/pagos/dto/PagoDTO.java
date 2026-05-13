@@ -28,4 +28,6 @@ public class PagoDTO {
     private LocalDate fechaPago;
     private Boolean aceptado;
 
+    private Integer pedidoId;
+
 }
