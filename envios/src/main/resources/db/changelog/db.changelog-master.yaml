@@ -1,0 +1,127 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-envios
+      author: carlos
+      changes:
+        - createTable:
+            tableName: ENVIOS
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: direccion_envio
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: nro_seguimiento
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: costo_envio
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: activo
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: fecha_envio
+                  type: DATE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: usuario_id
+                  type: INT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: pedido_id
+                  type: INT
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 002-create-seguimiento
+      author: carlos
+      changes:
+        - createTable:
+            tableName: SEGUIMIENTO
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: estado
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: direccion_envio
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: fecha_despacho
+                  type: DATE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: activo
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: ancho
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: alto
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: entregado
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: envio_id
+                  type: INT
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: SEGUIMIENTO
+            baseColumnNames: envio_id
+            referencedTableName: ENVIOS
+            referencedColumnNames: id
+            constraintName: fk_seguimiento_envio
