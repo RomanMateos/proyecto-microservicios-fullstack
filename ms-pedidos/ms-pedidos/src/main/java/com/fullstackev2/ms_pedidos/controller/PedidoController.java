@@ -18,29 +18,29 @@ public class PedidoController {
     private PedidoService pedidoService;
 
     @GetMapping
-    public ResponseEntity<List<PedidoDTO>> getAll() {
+    public ResponseEntity<List<PedidoDTO>> listarTodos() {
         return ResponseEntity.ok(pedidoService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PedidoDTO> getById(@PathVariable Integer id) {
+    public ResponseEntity<PedidoDTO> obtenerPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(pedidoService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<PedidoDTO> create(@Valid @RequestBody PedidoRequestDTO dto) {
+    public ResponseEntity<PedidoDTO> crear(@Valid @RequestBody PedidoRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(pedidoService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PedidoDTO> update(@PathVariable Integer id,
-                                            @Valid @RequestBody PedidoRequestDTO dto) {
+    public ResponseEntity<PedidoDTO> actualizar(@PathVariable Integer id,
+                                                @Valid @RequestBody PedidoRequestDTO dto) {
         return ResponseEntity.ok(pedidoService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
         pedidoService.delete(id);
         return ResponseEntity.noContent().build();
     }
