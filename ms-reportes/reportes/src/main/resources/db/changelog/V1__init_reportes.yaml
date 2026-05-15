@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: RomanMateos
+      changes:
+        - createTable:
+            tableName: reportes
+            columns:
+              - column:
+                  name: reporte_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: nombre_reporte
+                  type: VARCHAR(255)
+              - column:
+                  name: monto_total
+                  type: DOUBLE
+              - column:
+                  name: fecha_generacion
+                  type: DATE
