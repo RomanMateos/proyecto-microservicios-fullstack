@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: RomanMateos
+      changes:
+        - insert:
+            tableName: empleados
+            columns:
+              - column:
+                  name: nombre
+                  value: "Juan Pérez"
+              - column:
+                  name: email
+                  value: "juan.perez@empresa.cl"
+              - column:
+                  name: cargo
+                  value: "Desarrollador Backend"
+              - column:
+                  name: salario
+                  valueNumeric: 1500000
+              - column:
+                  name: activo
+                  valueBoolean: true
+              - column:
+                  name: fecha_ingreso
+                  valueDate: "2023-03-15"
+              - column:
+                  name: sucursal_id
+                  valueNumeric: 1
+        - insert:
+            tableName: empleados
+            columns:
+              - column:
+                  name: nombre
+                  value: "María González"
+              - column:
+                  name: email
+                  value: "maria.gonzalez@empresa.cl"
+              - column:
+                  name: cargo
+                  value: "Analista de Sistemas"
+              - column:
+                  name: salario
+                  valueNumeric: 1200000
+              - column:
+                  name: activo
+                  valueBoolean: true
+              - column:
+                  name: fecha_ingreso
+                  valueDate: "2022-07-01"
+              - column:
+                  name: sucursal_id
+                  valueNumeric: 1
+        - insert:
+            tableName: empleados
+            columns:
+              - column:
+                  name: nombre
+                  value: "Pedro Soto"
+              - column:
+                  name: email
+                  value: "pedro.soto@empresa.cl"
+              - column:
+                  name: cargo
+                  value: "Soporte TI"
+              - column:
+                  name: salario
+                  valueNumeric: 900000
+              - column:
+                  name: activo
+                  valueBoolean: false
+              - column:
+                  name: fecha_ingreso
+                  valueDate: "2021-01-10"
+              - column:
+                  name: sucursal_id
+                  valueNumeric: 2
+      rollback:
+        - delete:
+            tableName: empleados
