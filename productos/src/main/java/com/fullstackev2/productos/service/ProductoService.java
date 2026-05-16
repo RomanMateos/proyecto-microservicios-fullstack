@@ -7,7 +7,6 @@ import com.fullstackev2.productos.model.Producto;
 import com.fullstackev2.productos.repository.CategoriaRepository;
 import com.fullstackev2.productos.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,7 +50,6 @@ public class ProductoService {
         producto.setNombreProducto(dto.getNombreProducto());
         producto.setDescripcion(dto.getDescripcion());
         producto.setPrecio(dto.getPrecio());
-        producto.setStock(dto.getStock());
         producto.setFechaVencimiento(dto.getFechaVencimiento());
         producto.setDisponible(dto.getDisponible());
         producto.setCategoria(categoria);

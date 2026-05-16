@@ -1,11 +1,7 @@
 package com.fullstackev2.productos.runner;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fullstackev2.productos.model.Categoria;
-import com.fullstackev2.productos.model.Producto;
 import com.fullstackev2.productos.repository.CategoriaRepository;
-import com.fullstackev2.productos.service.CategoriaService;
-import jakarta.persistence.OneToMany;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;

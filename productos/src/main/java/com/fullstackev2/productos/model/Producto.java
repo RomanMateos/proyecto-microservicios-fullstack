@@ -23,8 +23,6 @@ public class Producto {
     private String descripcion;
     @Column(nullable = false)
     private Double precio;
-    @Column(nullable = false)
-    private Integer stock;
     private LocalDate fechaVencimiento;
     @Column(nullable = false)
     private Boolean disponible;

@@ -25,13 +25,13 @@ public class ProductoRunner implements CommandLineRunner {
         Categoria categoria3 = categoriaRepository.findById(3).orElse(null);
 
     if(!productoRepository.existsById(1)){
-        productoRepository.save(new Producto(null,"Shampoo","Shampoo H&S para la caspa",12590.0,12, LocalDate.of(2028,6,5),true,categoria1));
+        productoRepository.save(new Producto(null,"Shampoo","Shampoo H&S para la caspa",12590.0, LocalDate.of(2028,6,5),true,categoria1));
     }
     if(!productoRepository.existsById(2)){
-        productoRepository.save(new Producto(null,"Fideos","Fideos marca Luchetti",1990.0,15,LocalDate.of(2027,4,5),true,categoria2));
+        productoRepository.save(new Producto(null,"Fideos","Fideos marca Luchetti",1990.0,LocalDate.of(2027,4,5),true,categoria2));
     }
     if(!productoRepository.existsById(3)){
-        productoRepository.save(new Producto(null,"Merluza Apanada","Merluza congelada marca nuestro mar",15990.0,3,LocalDate.of(2028,6,5),true,categoria3));
+        productoRepository.save(new Producto(null,"Merluza Apanada","Merluza congelada marca nuestro mar",15990.0,LocalDate.of(2028,6,5),true,categoria3));
     }
     System.out.println("Productos cargadas correctamente");
 }}
