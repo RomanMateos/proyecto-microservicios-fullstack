@@ -5,9 +5,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
-@FeignClient(name = "ms-pedidos", url = "http://localhost:8084/api/v1/pedidos")
+@FeignClient(name = "ms-pedidos", url = "http://localhost:8084")
 public interface PedidoClient {
 
-    @GetMapping
-    List<PedidoDataDTO> obtenerPedidosParaReporte();
+    @GetMapping("/api/v1/pedidos")
+    List<PedidoDataDTO> obtenerPedidos();
 }

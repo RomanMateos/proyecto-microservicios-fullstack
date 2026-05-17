@@ -5,8 +5,8 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PedidoDataDTO {
-    private Integer pedidoId;
-    private Double total;
+public class EnvioDataDTO {
+    private Integer envioId;
     private String estado;
+    private Boolean entregado;
 }

@@ -1,16 +1,17 @@
 package com.fullstackev2.reportes.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReporteDTO {
+public class ReporteResponseDTO {
     private Integer reporteId;
+    private String titulo;
     private String descripcion;
     private Double montoTotal;
+    private Integer totalPedidos;
+    private boolean activo;
     private LocalDate fechaGeneracion;
 }
