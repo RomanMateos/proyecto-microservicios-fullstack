@@ -1,4 +1,4 @@
-package com.fullstackev2.sucursales;
+package com.fullstackev2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
