@@ -8,6 +8,7 @@ import com.fullstackev2.envios.dto.UsuarioDTO;
 import com.fullstackev2.envios.mapper.EnvioMapper;
 import com.fullstackev2.envios.model.Envio;
 import com.fullstackev2.envios.repository.EnvioRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 public class EnvioService {
     @Autowired
