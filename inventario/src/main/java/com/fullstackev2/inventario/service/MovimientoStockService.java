@@ -25,6 +25,7 @@ public class MovimientoStockService {
     private MovimientoStockRepository movimientoStockRepository;
 
     public List<MovimientoStockDTO> obtenerMovimientos() {
+        log.info("[Inventario service] obtenerMovimientos");
         return movimientoStockRepository.findAll()
                 .stream()
                 .map(MovimientoStockMapper::toDTO)
@@ -32,7 +33,7 @@ public class MovimientoStockService {
     }
     @Transactional
     public MovimientoStockDTO guardar(MovimientoStockDTO dto) {
-
+        log.info("[Inventario service] guardar");
         Inventario inventario = inventarioRepository.findById(dto.getInventarioId())
                 .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
 
@@ -52,10 +53,12 @@ public class MovimientoStockService {
         return MovimientoStockMapper.toDTO(guardado);
     }
     public Optional<MovimientoStockDTO> buscarPorId(Integer id) {
+        log.info("[Inventario service] buscarPorId");
         return movimientoStockRepository.findById(id)
                 .map(MovimientoStockMapper::toDTO);
     }
     public Optional<MovimientoStockDTO> actualizarPorId(Integer id, MovimientoStockDTO mov) {
+        log.info("[Inventario service] actualizarPorId");
         MovimientoStock movimiento = movimientoStockRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
         Inventario inventario = inventarioRepository.findById(mov.getInventarioId())
@@ -70,6 +73,7 @@ public class MovimientoStockService {
         return Optional.of(MovimientoStockMapper.toDTO(actualizado));
     }
     public boolean eliminarPorId(Integer id) {
+        log.info("[Inventario service] eliminarPorId");
         if (movimientoStockRepository.existsById(id)) {
             movimientoStockRepository.deleteById(id);
             return true;

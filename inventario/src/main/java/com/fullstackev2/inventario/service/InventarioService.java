@@ -23,13 +23,14 @@ public class InventarioService {
     @Autowired
     ProductoClient productoClient;
     public List<InventarioDTO> listarInventario(){
+        log.info("[Inventario service] listarInventario");
         return inventarioRepository.findAll()
                 .stream()
                 .map(InventarioMapper::toDTO)
                 .collect(Collectors.toList());
     }
     public InventarioDTO guardar(InventarioDTO dto) {
-
+        log.info("[Inventario service] guardarInventario");
         ProductoDTO producto = productoClient.obtenerProductoPorId(dto.getProductoId());
 
         if(producto == null){throw new RuntimeException("Producto no encontrado");}
@@ -39,10 +40,12 @@ public class InventarioService {
         return InventarioMapper.toDTO(guardado);
     }
     public Optional<InventarioDTO> buscarPorId(Integer id){
+        log.info("[Inventario service] buscarPorId");
         return inventarioRepository.findById(id)
                 .map(InventarioMapper::toDTO);
     }
     public Optional<InventarioDTO> actualizarPorId(Integer id, InventarioDTO dto) {
+        log.info("[Inventario service] actualizarPorId");
         Inventario inventario = inventarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
         ProductoDTO producto = productoClient.obtenerProductoPorId(dto.getProductoId());
@@ -60,6 +63,7 @@ public class InventarioService {
         return Optional.of(InventarioMapper.toDTO(actualizado));
     }
     public Boolean eliminarPorId(Integer id) {
+        log.info("[Inventario service] eliminarPorId");
         if (inventarioRepository.existsById(id)) {
             inventarioRepository.deleteById(id);
             return true;
@@ -67,6 +71,7 @@ public class InventarioService {
         return false;
     }
     public List<InventarioDTO> listarInventarioActivos(Integer cantidad) {
+        log.info("[Inventario service] listarInventarioActivos");
         return inventarioRepository.findByCantidadDisponibleGreaterThanAndActivoTrue(cantidad)
                 .stream()
                 .map(InventarioMapper::toDTO)
