@@ -8,6 +8,7 @@ import com.fullstackev2.envios.dto.UsuarioDTO;
 import com.fullstackev2.envios.mapper.EnvioMapper;
 import com.fullstackev2.envios.model.Envio;
 import com.fullstackev2.envios.repository.EnvioRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 public class EnvioService {
     @Autowired
@@ -25,12 +26,14 @@ public class EnvioService {
     @Autowired
     private UsuarioClient usuarioClient;
     public List<EnvioDTO> listarEnvio(){
+        log.info("[Envio Service] Iniciando listar envio");
         return envioRepository.findAll()
                 .stream()
                 .map(EnvioMapper::toDTO)
                 .collect(Collectors.toList());
     }
     public EnvioDTO guardar(EnvioDTO dto){
+        log.info("[Envio Service] Iniciando guardar envio");
         PedidoDTO pedido = pedidoClient.obtenerPedido(dto.getPedidoId());
         UsuarioDTO usuario = usuarioClient.obtenerUsuario(dto.getUsuarioId());
 
@@ -42,10 +45,12 @@ public class EnvioService {
         return EnvioMapper.toDTO(guardado);
     }
     public Optional<EnvioDTO> buscarPorId(Integer id){
+        log.info("[Envio Service] Iniciando buscar envio");
         return envioRepository.findById(id)
                 .map(EnvioMapper::toDTO);
     }
     public Optional<EnvioDTO> actualizarPorId(Integer id,EnvioDTO dto){
+        log.info("[Envio Service] Iniciando actualizar envio");
         Envio envio = envioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Envio no encontrado"));
         PedidoDTO pedido = pedidoClient.obtenerPedido(dto.getPedidoId());
@@ -65,6 +70,7 @@ public class EnvioService {
 
     }
     public Boolean eliminarPorId(Integer id){
+        log.info("[Envio Service] Iniciando eliminar envio");
         if(envioRepository.existsById(id)){
             envioRepository.deleteById(id);
             return true;
@@ -72,6 +78,7 @@ public class EnvioService {
         return false;
     }
     public List<EnvioDTO> buscarNoEntregadosPorRango(LocalDate fechaInicio, LocalDate fechaFin) {
+        log.info("[Envio Service] Iniciando listar envio");
         return envioRepository.buscarEnviosNoEntregadosPorRangoFechas(fechaInicio, fechaFin)
                 .stream()
                 .map(EnvioMapper::toDTO)
