@@ -1,14 +1,7 @@
 package com.fullstackev2.reportes.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 import java.time.LocalDate;
 
 @Entity
@@ -23,12 +16,21 @@ public class Reporte {
     @Column(name = "reporte_id")
     private Integer reporteId;
 
-    @Column(name = "descripcion")
+    @Column(name = "titulo", nullable = false, length = 150)
+    private String titulo;
+
+    @Column(name = "descripcion", nullable = false, length = 255)
     private String descripcion;
 
-    @Column(name = "monto_total")
+    @Column(name = "monto_total", nullable = false)
     private Double montoTotal;
 
-    @Column(name = "fecha_generacion")
+    @Column(name = "total_pedidos", nullable = false)
+    private Integer totalPedidos;
+
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
+    @Column(name = "fecha_generacion", nullable = false)
     private LocalDate fechaGeneracion;
 }

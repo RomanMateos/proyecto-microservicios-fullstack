@@ -6,7 +6,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients; // <- IMPORTANTE
 
 @SpringBootApplication
 @EnableFeignClients //
-public class ReportesApplication {
+public class
+ReportesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ReportesApplication.class, args);
 	}
