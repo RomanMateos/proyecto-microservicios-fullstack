@@ -21,11 +21,13 @@ public class ProductoController {
     private ProductoService productoService;
     @GetMapping("/productos")
     public ResponseEntity<List<ProductoDTO>> obtenerProductos(){
+        log.info("[Producto Controller] Iniciando obtener productos");
         List<ProductoDTO> productos = productoService.obtenerProductos();
         return ResponseEntity.ok(productos);
     }
     @GetMapping("/productos/{id}")
     public ResponseEntity<ProductoDTO> buscarPorId(@PathVariable Integer id){
+        log.info("[Producto Controller] Iniciando buscar por id");
         Optional<ProductoDTO> producto = productoService.buscarPorId(id);
         return producto
                 .map(ResponseEntity::ok)
@@ -33,16 +35,19 @@ public class ProductoController {
     }
     @PostMapping("/productos")
     public ResponseEntity<ProductoDTO> guardar(@Valid @RequestBody ProductoDTO producto){
+        log.info("[Producto Controller] Iniciando guardar producto");
         return ResponseEntity.status(HttpStatus.CREATED).body(productoService.guardar(producto));
     }
     @PutMapping("/productos/{id}")
     public ResponseEntity<ProductoDTO> actualizar(@PathVariable Integer id,@Valid @RequestBody ProductoDTO producto){
+        log.info("[Producto Controller] Iniciando actualizar producto");
         return productoService.actualizarPorId(id,producto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
     @DeleteMapping("/productos/{id}")
     public ResponseEntity<Void> eliminarPorId(@PathVariable Integer id){
+        log.info("[Producto Controller] Iniciando eliminar por id");
         boolean eliminado = productoService.eliminarPorId(id);
         if(eliminado){return ResponseEntity.noContent().build();}
         return ResponseEntity.notFound().build();
@@ -50,6 +55,7 @@ public class ProductoController {
     }
     @GetMapping("/productos/buscar")
     public ResponseEntity<List<ProductoDTO>> buscarPorNombreYPrecio(@RequestParam String nombreProducto,@RequestParam Double precio){
+        log.info("[Producto Controller] Iniciando buscar por nombre");
         List<ProductoDTO> productos = productoService.buscarPorNombreYPrecio(nombreProducto,precio);
         return ResponseEntity.ok(productos);
     }

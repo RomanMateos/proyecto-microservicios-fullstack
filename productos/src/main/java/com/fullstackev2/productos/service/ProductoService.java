@@ -22,6 +22,7 @@ public class ProductoService {
     private CategoriaRepository categoriaRepository;
 
     public List<ProductoDTO> obtenerProductos() {
+        log.info("[Producto Service] Iniciando obtenerProductos");
         return productoRepository.findAll()
                 .stream()
                 .map(ProductoMapper::toDTO)
@@ -29,6 +30,7 @@ public class ProductoService {
     }
 
     public ProductoDTO guardar(ProductoDTO dto) {
+        log.info("[Producto Service] Iniciando guardar");
         Producto producto = ProductoMapper.toEntity(dto);
         Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
                 .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
@@ -38,11 +40,13 @@ public class ProductoService {
     }
 
     public Optional<ProductoDTO> buscarPorId(Integer id) {
+        log.info("[Producto Service] Iniciando buscar por id");
         return productoRepository.findById(id)
                 .map(ProductoMapper::toDTO);
     }
 
     public Optional<ProductoDTO> actualizarPorId(Integer id, ProductoDTO dto) {
+        log.info("[Producto Service] Iniciando actualizar por id");
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
@@ -60,6 +64,7 @@ public class ProductoService {
     }
 
     public boolean eliminarPorId(Integer id) {
+        log.info("[Producto Service] Iniciando eliminar por id");
         if (productoRepository.existsById(id)) {
             productoRepository.deleteById(id);
             return true;
@@ -68,6 +73,7 @@ public class ProductoService {
     }
 
     public List<ProductoDTO> buscarPorNombreYPrecio(String nombreProducto, Double precio) {
+        log.info("[Producto Service] Iniciando buscar por nombre");
         return productoRepository
                 .findByNombreProductoContainingIgnoreCaseAndPrecioLessThan(nombreProducto, precio)
                 .stream()
