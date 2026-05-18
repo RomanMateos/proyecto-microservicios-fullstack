@@ -11,6 +11,7 @@ import com.fullstackev2.pedidos.model.Pedido;
 import com.fullstackev2.pedidos.repository.DetallePedidoRepository;
 import com.fullstackev2.pedidos.exception.ResourceNotFoundException;
 import com.fullstackev2.pedidos.repository.PedidoRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+@Slf4j
 @Service
 public class DetallePedidoService {
 
@@ -32,7 +33,7 @@ public class DetallePedidoService {
 
 
     public List<DetallePedidoDTO> listarDetallePedido() {
-        log.info()
+        log.info("[Detalle Pedido Service] Iniciando listarDetallePedido");
         return detallePedidoRepository.findAll()
                 .stream()
                 .map(DetallePedidoMapper::toDTO)
@@ -41,12 +42,13 @@ public class DetallePedidoService {
     }
 
     public Optional<DetallePedidoDTO> buscarPorId(Integer id) {
+        log.info("[Detalle Pedido Service] Iniciando buscarPorId");
         return detallePedidoRepository.findById(id)
                 .map(DetallePedidoMapper::toDTO);
     }
 
     public DetallePedidoDTO guardar(DetallePedidoRequestDTO dto) {
-
+        log.info("[Detalle Pedido Service] Iniciando guardar");
         ProductoDTO producto = productoClient.getProductoById(dto.getProductoId());
 
         if (producto == null) {
@@ -79,7 +81,7 @@ public class DetallePedidoService {
 
 
     public DetallePedidoDTO actualizarPorId(Integer id, DetallePedidoRequestDTO dto) {
-
+        log.info("[Detalle Pedido Service] Iniciando actualizarPorId");
         DetallePedido detalle = detallePedidoRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
@@ -111,6 +113,7 @@ public class DetallePedidoService {
     }
 
     public Boolean eliminarPorId(Integer id) {
+        log.info("[Detalle Pedido Service] Iniciando eliminarPorId");
         Optional<DetallePedido> detalleOpt = detallePedidoRepository.findById(id);
         if (detalleOpt.isEmpty()) {return false;}
         DetallePedido detalle = detalleOpt.get();
@@ -121,7 +124,7 @@ public class DetallePedidoService {
     }
 
     private void recalcularTotalPedido(Pedido pedido) {
-
+        log.info("[Detalle Pedido Service] Iniciando recalcularTotalPedido");
         Double total = detallePedidoRepository.findAll()
                 .stream()
                 .filter(detalle -> detalle.getPedido() != null)
