@@ -29,10 +29,10 @@ public class DetallePedidoService {
     private PedidoRepository pedidoRepository;
     @Autowired
     private ProductoClient productoClient;
-    @Autowired
-    private UsuarioClient usuarioClient;
+
 
     public List<DetallePedidoDTO> listarDetallePedido() {
+        log.info()
         return detallePedidoRepository.findAll()
                 .stream()
                 .map(DetallePedidoMapper::toDTO)

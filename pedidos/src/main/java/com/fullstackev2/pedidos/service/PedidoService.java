@@ -21,6 +21,7 @@ public class PedidoService {
     @Autowired
     private UsuarioClient usuarioClient;
     public List<PedidoDTO> obtenerPedidos() {
+
         return pedidoRepository.findAll()
                 .stream()
                 .map(PedidoMapper::toDTO)
