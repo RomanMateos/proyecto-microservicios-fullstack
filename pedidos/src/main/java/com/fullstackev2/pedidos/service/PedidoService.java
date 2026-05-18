@@ -7,12 +7,13 @@ import com.fullstackev2.pedidos.dto.PedidoDTO;
 import com.fullstackev2.pedidos.mapper.PedidoMapper;
 import com.fullstackev2.pedidos.repository.PedidoRepository;
 import com.fullstackev2.pedidos.exception.ResourceNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Service
 public class PedidoService {
 
@@ -21,6 +22,7 @@ public class PedidoService {
     @Autowired
     private UsuarioClient usuarioClient;
     public List<PedidoDTO> obtenerPedidos() {
+        log.info("[Pedido Service] Iniciando obtenerPedidos");
         return pedidoRepository.findAll()
                 .stream()
                 .map(PedidoMapper::toDTO)
@@ -28,6 +30,7 @@ public class PedidoService {
     }
 
     public PedidoDTO buscarPorId(Integer id) {
+        log.info("[Pedido Service] Iniciando buscarPorId");
         Pedido pedido = pedidoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado"));
         return PedidoMapper.toDTO(pedido);
@@ -35,7 +38,7 @@ public class PedidoService {
 
 
     public PedidoDTO guardar(PedidoDTO dto) {
-
+        log.info("[Pedido Service] Iniciando guardar");
         UsuarioDTO usuario = usuarioClient.getUsuarioById(dto.getUsuarioId());
 
         if (usuario == null) {
@@ -57,6 +60,7 @@ public class PedidoService {
     }
 
     public Optional<PedidoDTO> actualizarPorId(Integer id, PedidoDTO dto) {
+        log.info("[Pedido Service] Iniciando actualizarPorId");
         pedidoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado con id: " + id));
         Pedido pedido = PedidoMapper.toEntity(dto);
@@ -66,6 +70,7 @@ public class PedidoService {
     }
 
     public Boolean eliminarPorId(Integer id) {
+        log.info("[Pedido Service] Iniciando eliminarPorId");
         if (pedidoRepository.existsById(id)) {
             pedidoRepository.deleteById(id);
             return true;
@@ -73,6 +78,7 @@ public class PedidoService {
         return false;
     }
     public Double obtenerTotalPedido(Integer id) {
+        log.info("[Pedido Service] Iniciando obtenerTotalPedido");
         Pedido pedido = pedidoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Pedido no encontrado con id: " + id));

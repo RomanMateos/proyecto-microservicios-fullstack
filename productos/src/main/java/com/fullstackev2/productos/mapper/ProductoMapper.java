@@ -10,7 +10,6 @@ public class ProductoMapper {
                 producto.getNombreProducto(),
                 producto.getDescripcion(),
                 producto.getPrecio(),
-                producto.getStock(),
                 producto.getFechaVencimiento(),
                 producto.getDisponible(),
                 producto.getCategoria() != null ? producto.getCategoria().getId() :null
@@ -23,7 +22,6 @@ public class ProductoMapper {
         producto.setNombreProducto(dto.getNombreProducto());
         producto.setDescripcion(dto.getDescripcion());
         producto.setPrecio(dto.getPrecio());
-        producto.setStock(dto.getStock());
         producto.setFechaVencimiento(dto.getFechaVencimiento());
         producto.setDisponible(dto.getDisponible());
 

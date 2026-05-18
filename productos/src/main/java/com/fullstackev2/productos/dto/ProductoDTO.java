@@ -22,9 +22,6 @@ public class ProductoDTO {
     @DecimalMin(value = "100.0" ,message="El valor debe ser superior a 100 pesos")
     @Positive(message="El valor debe ser positivo")
     private Double precio;
-    @Min(value=1,message="La cantidad debe ser mayor que 0")
-    @NotNull(message ="No puede ser nulo")
-    private Integer stock;
     @NotNull(message="La fecha no puede estar en blanco")
     @Future(message="La fecha de vencimiento no puede ser hoy ni anterior al dia de hoy")
     private LocalDate fechaVencimiento;
