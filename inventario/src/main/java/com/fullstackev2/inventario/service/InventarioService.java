@@ -6,6 +6,7 @@ import com.fullstackev2.inventario.dto.ProductoDTO;
 import com.fullstackev2.inventario.mapper.InventarioMapper;
 import com.fullstackev2.inventario.model.Inventario;
 import com.fullstackev2.inventario.repository.InventarioRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class InventarioService {
     @Autowired
