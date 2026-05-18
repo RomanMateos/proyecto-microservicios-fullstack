@@ -22,12 +22,15 @@ public class SeguimientoController {
     @Autowired
     private SeguimientoService seguimientoService;
     @GetMapping("/seguimientos")
+
     public ResponseEntity<List<SeguimientoDTO>> seguimientos(){
+        log.info("[Seguimiento Controller] Iniciando lista de seguimientos");
         List<SeguimientoDTO> seg = seguimientoService.listarSeguimientos();
         return ResponseEntity.ok().body(seg);
     }
     @GetMapping("/seguimientos/{id}")
     public ResponseEntity<SeguimientoDTO> buscarPorId(@PathVariable Integer id){
+        log.info("[Seguimiento Controller] Iniciando buscar seguimiento por id");
         Optional<SeguimientoDTO> seguimiento = seguimientoService.buscarPorId(id);
         return seguimiento
                 .map(ResponseEntity::ok)
@@ -35,16 +38,19 @@ public class SeguimientoController {
     }
     @PostMapping("/seguimientos")
     public ResponseEntity<SeguimientoDTO> guardar(@Valid @RequestBody SeguimientoDTO seguimientoDTO){
+        log.info("[Seguimiento Controller] Iniciando guardar seguimiento");
         return ResponseEntity.status(HttpStatus.CREATED).body(seguimientoService.guardar(seguimientoDTO));
     }
     @PutMapping("/seguimientos/{id}")
     public ResponseEntity<SeguimientoDTO> actualizar(@PathVariable Integer id, @Valid @RequestBody SeguimientoDTO dto){
+        log.info("[Seguimiento Controller] Iniciando actualizar seguimiento");
         return seguimientoService.actualizarPorId(id,dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
     @DeleteMapping("/seguimientos/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id){
+        log.info("[Seguimiento Controller] Iniciando eliminar seguimiento");
         boolean eliminado = seguimientoService.eliminarPorId(id);
         if(eliminado){return ResponseEntity.noContent().build();}
         return ResponseEntity.notFound().build();

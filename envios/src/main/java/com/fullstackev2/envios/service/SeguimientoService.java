@@ -23,13 +23,16 @@ public class SeguimientoService {
     SeguimientoRepository seguimientoRepository;
     @Autowired
     EnvioRepository envioRepository;
+
     public List<SeguimientoDTO> listarSeguimientos(){
+        log.info("[Seguimiento Service] Iniciando listar seguimientos");
         return seguimientoRepository.findAll()
                 .stream()
                 .map(SeguimientoMapper::toDTO)
                 .collect(Collectors.toList());
     }
     public SeguimientoDTO guardar(SeguimientoDTO dto){
+        log.info("[Seguimiento Service] Iniciando guardar seguimiento");
         Envio envio = envioRepository.findById(dto.getEnvioId())
                 .orElseThrow(() -> new RuntimeException("Envio no encontrado"));
         Seguimiento seguimiento = SeguimientoMapper.toEntity(dto);
@@ -38,11 +41,13 @@ public class SeguimientoService {
         return SeguimientoMapper.toDTO(guardado);
     }
     public Optional<SeguimientoDTO> buscarPorId(Integer id){
+        log.info("[Seguimiento Service] Iniciando buscar seguimiento");
         return seguimientoRepository.findById(id)
                 .map(SeguimientoMapper::toDTO);
     }
 
     public Optional<SeguimientoDTO> actualizarPorId(Integer id, SeguimientoDTO dto){
+        log.info("[Seguimiento Service] Iniciando actualizar seguimiento");
         Seguimiento seg = seguimientoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Seguimiento no encontrado"));
         Envio envio = envioRepository.findById(dto.getEnvioId())
@@ -61,6 +66,7 @@ public class SeguimientoService {
         return Optional.of(SeguimientoMapper.toDTO(actualizado));
     }
     public boolean eliminarPorId(Integer id){
+        log.info("[Seguimiento Service] Iniciando eliminar seguimiento");
         if(seguimientoRepository.existsById(id)){
             seguimientoRepository.deleteById(id);
             return true;
