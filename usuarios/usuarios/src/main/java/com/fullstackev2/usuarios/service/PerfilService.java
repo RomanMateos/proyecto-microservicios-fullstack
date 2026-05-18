@@ -21,12 +21,14 @@ public class PerfilService {
     @Autowired
     private UsuarioRepository usuarioRepository;
     public List<PerfilDTO> obtenerPerfiles() {
+        log.info("[Perfil Service] Iniciando obtencion de perfiles");
         return perfilRepository.findAll()
                 .stream()
                 .map(PerfilMapper::toDTO)
                 .collect(Collectors.toList());
     }
     public PerfilDTO guardar(PerfilDTO dto){
+        log.info("[Perfil Service] Iniciando guardar perfile");
         Perfil perfil = PerfilMapper.toEntity(dto);
         Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -35,10 +37,12 @@ public class PerfilService {
         return PerfilMapper.toDTO(guardado);
     }
     public Optional<PerfilDTO> buscarPorId(Integer id){
+        log.info("[Perfil Service] Iniciando buscar perfile");
         return perfilRepository.findById(id)
                 .map(PerfilMapper::toDTO);
     }
     public  Optional<PerfilDTO> actualizarPorId(Integer id, PerfilDTO dto){
+        log.info("[Perfil Service] Iniciando actualizar perfile");
         Perfil perfil = perfilRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No existe el perfil com este id"));
         Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
@@ -54,6 +58,7 @@ public class PerfilService {
         return Optional.of(PerfilMapper.toDTO(actualizado));
     }
     public boolean eliminarPorId(Integer id){
+        log.info("[Perfil Service] Iniciando eliminar perfile");
         if(perfilRepository.existsById(id)) {
             perfilRepository.deleteById(id);
             return true;
