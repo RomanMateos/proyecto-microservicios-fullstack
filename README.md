@@ -24,8 +24,8 @@ Cada microservicio tiene su propia base de datos y se comunica via FeignClient.
 | ms-reportes | 8090 | prueba7 | Román Suárez |
 
 ## Tecnologías
-- Java 21
-- Spring Boot 3.5.14
+- Java 17
+- Spring Boot 3.4.5
 - Spring Cloud OpenFeign
 - MySQL 8 / Laragon
 - Liquibase / Flyway / CommandLineRunner
@@ -34,7 +34,7 @@ Cada microservicio tiene su propia base de datos y se comunica via FeignClient.
 ## Pasos para ejecutar
 
 ### Requisitos
-- Java 21+
+- Java 17
 - MySQL corriendo en puerto 3306
 - Maven
 
