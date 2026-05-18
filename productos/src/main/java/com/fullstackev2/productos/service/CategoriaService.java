@@ -4,13 +4,14 @@ import com.fullstackev2.productos.dto.CategoriaDTO;
 import com.fullstackev2.productos.mapper.CategoriaMapper;
 import com.fullstackev2.productos.model.Categoria;
 import com.fullstackev2.productos.repository.CategoriaRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 public class CategoriaService {
     @Autowired
