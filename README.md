@@ -12,10 +12,10 @@ Cada microservicio tiene su propia base de datos y se comunica via FeignClient.
 
 | Microservicio | Puerto | BD | Responsable |
 |---|---|---|---|
-| ms-usuarios | 8081 | prueba1 | Carlos Labbe |
-| ms-productos | 8082 | prueba1 | Carlos Labbe |
-| ms-inventario | 8083 | prueba2 | Carlos Labbe |
-| ms-pedidos | 8084 | prueba3 | Carlos Labbe |
+| ms-usuarios | 8081 | prueba1 | Carlos Labbé |
+| ms-productos | 8082 | prueba1 | Carlos Labbé |
+| ms-inventario | 8083 | prueba2 | Carlos Labbé |
+| ms-pedidos | 8084 | prueba3 | Carlos Labbé |
 | ms-pagos | 8085 | prueba4 | Kevin Schergel|
 | ms-envios | 8086 | prueba5 | Kevin Schergel|
 | ms-proveedores | 8087 | prueba1 | Román Suárez |
