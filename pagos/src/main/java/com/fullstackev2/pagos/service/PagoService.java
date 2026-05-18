@@ -21,12 +21,14 @@ public class PagoService {
     @Autowired
     PedidoClient pedidoClient;
     public List<PagoDTO> obtenerTotalPedidos(){
+        log.info("[Pago Service] Iniciando obtencion de pedidos");
         return pagoRepository.findAll()
                 .stream()
                 .map(PagoMapper::toDTO)
                 .collect(Collectors.toList());
     }
     public PagoDTO guardar(PagoDTO dto) {
+        log.info("[Pago Service] Iniciando guardar");
         Double totalPedido = pedidoClient.obtenerTotalPedido(dto.getPedidoId());
 
         if (totalPedido == null) {
@@ -38,13 +40,15 @@ public class PagoService {
         return PagoMapper.toDTO(guardado);
     }
     public Optional<PagoDTO> buscarPorId(Integer id) {
+        log.info("[Pago Service] Iniciando buscar por id");
         return pagoRepository.findById(id)
                 .map(PagoMapper::toDTO);
     }
     public Optional<PagoDTO> actualizarPorId(Integer id, PagoDTO dto) {
+        log.info("[Pago Service] Iniciando actualizar por id");
         Pago pago = pagoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
-        Double totalPedido = pedidoClient.obtenerTotalPedido(dto.getPedidoId());
+        Double totalPedido = obtenerTotalPedido(dto.getPedidoId());
         if (totalPedido == null) {
             throw new RuntimeException("Pago no encontrado");
         }
@@ -58,6 +62,7 @@ public class PagoService {
         return Optional.of(PagoMapper.toDTO(actualizado));
     }
     public Boolean eliminarPorId(Integer id) {
+        log.info("[Pago Service] Iniciando eliminar por id");
         if(pagoRepository.existsById(id)){
             pagoRepository.deleteById(id);
             return true;
@@ -65,9 +70,11 @@ public class PagoService {
         return false;
     }
     public Double obtenerTotalPedido(Integer pedidoId){
+        log.info("[Pago Service] Iniciando obtencion de pedidos");
         return pedidoClient.obtenerTotalPedido(pedidoId);
     }
     public List<PagoDTO> buscarPagos(Double monto, Boolean aceptado){
+        log.info("[Pago Service] Iniciando buscar pagos");
         return pagoRepository.buscarPagosPorMontoYEstado(monto,aceptado)
                 .stream()
                 .map(PagoMapper::toDTO)
