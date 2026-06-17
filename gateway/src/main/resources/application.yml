@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: ms-usuarios
+              uri: http://localhost:8081
+              predicates:
+                - Path=/api/v1/usuarios/**
+
+            - id: ms-productos
+              uri: http://localhost:8082
+              predicates:
+                - Path=/api/v1/productos/**,/api/v1/categorias/**
+
+            - id: ms-inventario
+              uri: http://localhost:8083
+              predicates:
+                - Path=/api/v1/inventario/**,/api/v1/movimientos-stock/**
+
+            - id: ms-pedidos
+              uri: http://localhost:8084
+              predicates:
+                - Path=/api/v1/pedidos/**,/api/v1/detalles-pedido/**
+
+            - id: ms-pagos
+              uri: http://localhost:8085
+              predicates:
+                - Path=/api/v1/pagos/**
+
+            - id: ms-envios
+              uri: http://localhost:8086
+              predicates:
+                - Path=/api/v1/envios/**,/api/v1/seguimientos/**
