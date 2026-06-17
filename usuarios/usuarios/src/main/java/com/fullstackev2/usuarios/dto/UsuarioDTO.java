@@ -35,7 +35,7 @@ public class UsuarioDTO {
     private Integer edad;
     @NotNull(message="La fecha no puede estar en blanco")
     @Past(message="La fecha debe ser anterior a la de hoy")
-    @Schema(description = "Fecha de nacimiento del usuario", example = "1995/04/05")
+    @Schema(description = "Fecha de nacimiento del usuario", example = "1995-04-05")
     private LocalDate fechaNacimiento;
     @Schema(description = "Estado del usuario",example = "true")
     private Boolean activo;
