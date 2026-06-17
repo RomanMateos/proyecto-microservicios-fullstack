@@ -6,17 +6,22 @@ import com.fullstackev2.usuarios.dto.UsuarioDTO;
 import com.fullstackev2.usuarios.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @Slf4j
 @RestController
 @RequestMapping("api/v1")
@@ -86,5 +91,67 @@ public class UsuarioController {
         log.info("[Usuario Controller] Iniciando obtener usuario");
         List<UsuarioDTO> usuarios = usuarioService.buscarPorEmailYActivo(email,activo);
         return ResponseEntity.ok(usuarios);
+    }
+
+
+
+
+    @GetMapping("/usuarios/{id}/hateoas")
+    @Operation(summary = "Buscar usuario por ID con HATEOAS", description = "Obtiene un usuario específico y agrega enlaces relacionados mediante HATEOAS.")
+    @ApiResponse(responseCode = "200", description = "Usuario encontrado con enlaces HATEOAS")
+    @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    @ApiResponse(responseCode = "500", description = "Error inesperado")
+    public ResponseEntity<EntityModel<UsuarioDTO>> obtenerUsuarioHateoas(@PathVariable("id") Integer id) {
+        log.info("[Usuario Controller] Iniciando obtenerUsuarioHateoas");
+
+        Optional<UsuarioDTO> usuario = usuarioService.buscarPorId(id);
+
+        if (usuario.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        EntityModel<UsuarioDTO> recurso = EntityModel.of(usuario.get());
+
+        recurso.add(linkTo(methodOn(UsuarioController.class).obtenerUsuario(id)).withSelfRel());
+        recurso.add(linkTo(methodOn(UsuarioController.class).listarUsuarios()).withRel("usuarios"));
+        recurso.add(linkTo(methodOn(UsuarioController.class).obtenerUsuarioPorEmail(
+                usuario.get().getEmail(),
+                usuario.get().getActivo()
+        )).withRel("buscar-por-email-y-estado"));
+        recurso.add(linkTo(methodOn(UsuarioController.class).eliminar(id)).withRel("eliminar"));
+
+        return ResponseEntity.ok(recurso);
+    }
+    @GetMapping("/usuarios/hateoas")
+    @Operation(summary = "Listar usuarios con HATEOAS", description = "Obtiene todos los usuarios registrados y agrega enlaces HATEOAS a cada recurso.")
+    @ApiResponse(responseCode = "200", description = "Usuarios obtenidos con enlaces HATEOAS")
+    @ApiResponse(responseCode = "500", description = "Error inesperado")
+    public ResponseEntity<CollectionModel<EntityModel<UsuarioDTO>>> listarUsuariosHateoas() {
+        log.info("[Usuario Controller] Iniciando listarUsuariosHateoas");
+
+        List<EntityModel<UsuarioDTO>> usuarios = usuarioService.obtenerUsuarios()
+                .stream()
+                .map(usuario -> {
+                    EntityModel<UsuarioDTO> recurso = EntityModel.of(usuario);
+
+                    recurso.add(linkTo(methodOn(UsuarioController.class)
+                            .obtenerUsuario(usuario.getId())).withSelfRel());
+
+                    recurso.add(linkTo(methodOn(UsuarioController.class)
+                            .obtenerUsuarioHateoas(usuario.getId())).withRel("hateoas"));
+
+                    recurso.add(linkTo(methodOn(UsuarioController.class)
+                            .eliminar(usuario.getId())).withRel("eliminar"));
+
+                    return recurso;
+                })
+                .toList();
+
+        CollectionModel<EntityModel<UsuarioDTO>> coleccion = CollectionModel.of(usuarios);
+
+        coleccion.add(linkTo(methodOn(UsuarioController.class).listarUsuarios()).withRel("usuarios"));
+        coleccion.add(linkTo(methodOn(UsuarioController.class).listarUsuariosHateoas()).withSelfRel());
+
+        return ResponseEntity.ok(coleccion);
     }
 }

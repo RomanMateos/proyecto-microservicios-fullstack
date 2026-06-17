@@ -34,11 +34,11 @@ public class PerfilDTO {
     @Min(value=1,message="Debes ingresar una edad valida")
     @Max(value=120,message="Debes ingresar uan edad valida")
     private Integer edad;
-    @Schema(description = "Fecha de nacimiento del usuario del perfil", example = "04/05/1995")
+    @Schema(description = "Fecha de nacimiento del usuario del perfil", example = "1995/04/05")
     @Past(message="La fecha no puede ser hoy ni posterior")
     @NotNull(message="La fecha no puede estar en blanco")
     private LocalDate fechaNacimiento;
-    @Schema(description = "Estado del perfil",example= "Activo/Inactivo")
+    @Schema(description = "Estado del perfil",example= "true")
     private Boolean activo;
     @Schema(description = "Identificador que lo asocia al usuario")
     private Integer usuarioId;
