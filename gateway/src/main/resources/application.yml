@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: gateway
+    name: api-gateway
 
   cloud:
     gateway:
@@ -11,31 +11,34 @@ spring:
         webmvc:
           routes:
             - id: ms-usuarios
-              uri: http://localhost:8081
+              uri: lb://ms-usuarios
               predicates:
-                - Path=/api/v1/usuarios/**
+                - Path=/api/v1/usuarios/**,/api/v1/perfiles/**
 
             - id: ms-productos
-              uri: http://localhost:8082
+              uri: lb://ms-productos
               predicates:
                 - Path=/api/v1/productos/**,/api/v1/categorias/**
 
             - id: ms-inventario
-              uri: http://localhost:8083
+              uri: lb://ms-inventario
               predicates:
-                - Path=/api/v1/inventario/**,/api/v1/movimientos-stock/**
+                - Path=/api/v1/inventario/**,/api/v1/movimientos/**
 
             - id: ms-pedidos
-              uri: http://localhost:8084
+              uri: lb://ms-pedidos
               predicates:
                 - Path=/api/v1/pedidos/**,/api/v1/detalles-pedido/**
 
             - id: ms-pagos
-              uri: http://localhost:8085
+              uri: lb://ms-pagos
               predicates:
                 - Path=/api/v1/pagos/**
 
-            - id: ms-envios
-              uri: http://localhost:8086
-              predicates:
-                - Path=/api/v1/envios/**,/api/v1/seguimientos/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
