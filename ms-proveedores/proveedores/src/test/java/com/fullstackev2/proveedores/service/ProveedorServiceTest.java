@@ -89,8 +89,8 @@ class ProveedorServiceTest {
         // Then - verificamos que el resultado es correcto
         assertNotNull(resultado);               // la lista no debe ser null
         assertEquals(1, resultado.size());      // debe tener 1 elemento
-        assertEquals("Tech Supply", resultado.get(0).getNombre()); // nombre correcto
-        verify(proveedorRepository, times(1)).findAll(); // el repo fue llamado 1 vez
+        assertEquals("Tech Supply", resultado.get(0).getNombre());
+        verify(proveedorRepository, times(1)).findAll();
     }
 
     // TEST 2: buscarPorId con ID existente debe devolver el proveedor
@@ -137,7 +137,7 @@ class ProveedorServiceTest {
         // Then
         assertNotNull(resultado);
         assertEquals("Tech Supply", resultado.getNombre());
-        verify(proveedorRepository, times(1)).save(proveedor); // save fue llamado
+        verify(proveedorRepository, times(1)).save(proveedor);
     }
 
     // TEST 5: guardar proveedor con email duplicado debe lanzar excepción
@@ -169,7 +169,7 @@ class ProveedorServiceTest {
 
         // Then
         assertTrue(resultado); // debe devolver true
-        verify(proveedorRepository, times(1)).deleteById(1); // deleteById fue llamado
+        verify(proveedorRepository, times(1)).deleteById(1);
     }
 
     // TEST 7: eliminar proveedor inexistente debe devolver false
@@ -182,7 +182,7 @@ class ProveedorServiceTest {
         boolean resultado = proveedorService.eliminar(99);
 
         // Then
-        assertFalse(resultado); // debe devolver false
-        verify(proveedorRepository, never()).deleteById(any()); // deleteById nunca fue llamado
+        assertFalse(resultado);
+        verify(proveedorRepository, never()).deleteById(any());
     }
 }
