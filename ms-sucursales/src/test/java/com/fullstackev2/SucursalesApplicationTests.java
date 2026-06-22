@@ -1,4 +1,4 @@
-package com.fullstackev2.sucursales;
+package com.fullstackev2;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
