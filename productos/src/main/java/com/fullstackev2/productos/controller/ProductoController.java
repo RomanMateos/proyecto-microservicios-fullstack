@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 import java.util.List;
@@ -123,5 +127,66 @@ public class ProductoController {
         log.info("[Producto Controller] Iniciando buscar por nombre y precio");
         List<ProductoDTO> productos = productoService.buscarPorNombreYPrecio(nombreProducto, precio);
         return ResponseEntity.ok(productos);
+    }
+    @GetMapping("/productos/{id}/hateoas")
+    @Operation(
+            summary = "Buscar producto por ID con HATEOAS",
+            description = "Obtiene un producto específico y agrega enlaces relacionados mediante HATEOAS"
+    )
+    @ApiResponse(responseCode = "200", description = "Producto encontrado con enlaces HATEOAS")
+    @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    @ApiResponse(responseCode = "500", description = "Error inesperado")
+    public ResponseEntity<EntityModel<ProductoDTO>> buscarPorIdHateoas(@PathVariable Integer id) {
+        log.info("[Producto Controller] Iniciando buscarPorIdHateoas");
+
+        Optional<ProductoDTO> producto = productoService.buscarPorId(id);
+
+        if (producto.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        EntityModel<ProductoDTO> recurso = EntityModel.of(producto.get());
+
+        recurso.add(linkTo(methodOn(ProductoController.class).buscarPorId(id)).withSelfRel());
+        recurso.add(linkTo(methodOn(ProductoController.class).obtenerProductos()).withRel("productos"));
+        recurso.add(linkTo(methodOn(ProductoController.class).eliminarPorId(id)).withRel("eliminar"));
+
+        return ResponseEntity.ok(recurso);
+    }
+
+    @GetMapping("/productos/hateoas")
+    @Operation(
+            summary = "Listar productos con HATEOAS",
+            description = "Obtiene todos los productos registrados y agrega enlaces HATEOAS a cada recurso"
+    )
+    @ApiResponse(responseCode = "200", description = "Productos obtenidos con enlaces HATEOAS")
+    @ApiResponse(responseCode = "500", description = "Error inesperado")
+    public ResponseEntity<CollectionModel<EntityModel<ProductoDTO>>> listarProductosHateoas() {
+        log.info("[Producto Controller] Iniciando listarProductosHateoas");
+
+        List<EntityModel<ProductoDTO>> productos = productoService.obtenerProductos()
+                .stream()
+                .map(producto -> {
+                    EntityModel<ProductoDTO> recurso = EntityModel.of(producto);
+
+                    recurso.add(linkTo(methodOn(ProductoController.class)
+                            .buscarPorId(producto.getId())).withSelfRel());
+
+                    recurso.add(linkTo(methodOn(ProductoController.class)
+                            .buscarPorIdHateoas(producto.getId())).withRel("hateoas"));
+
+                    recurso.add(linkTo(methodOn(ProductoController.class)
+                            .eliminarPorId(producto.getId())).withRel("eliminar"));
+
+                    return recurso;
+                })
+                .toList();
+
+        CollectionModel<EntityModel<ProductoDTO>> coleccion = CollectionModel.of(productos);
+
+        coleccion.add(linkTo(methodOn(ProductoController.class).obtenerProductos()).withRel("productos"));
+        coleccion.add(linkTo(methodOn(ProductoController.class).listarProductosHateoas()).withSelfRel());
+
+        return ResponseEntity.ok(coleccion);
     }
 }

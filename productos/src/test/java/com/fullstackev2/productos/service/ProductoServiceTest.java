@@ -2,6 +2,7 @@ package com.fullstackev2.productos.service;
 
 import com.fullstackev2.productos.dto.ProductoDTO;
 import com.fullstackev2.productos.model.Producto;
+import com.fullstackev2.productos.repository.CategoriaRepository;
 import com.fullstackev2.productos.repository.ProductoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +21,8 @@ class ProductoServiceTest {
 
     @Mock
     private ProductoRepository productoRepository;
-
+    @Mock
+    private CategoriaRepository categoriaRepository;
     @InjectMocks
     private ProductoService productoService;
 
