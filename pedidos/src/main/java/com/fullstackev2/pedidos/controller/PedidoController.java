@@ -34,7 +34,9 @@ public class PedidoController {
     public ResponseEntity<CollectionModel<EntityModel<PedidoDTO>>> listarTodos() {
         log.info("[Pedido Controller] Iniciando lista de pedidos con HATEOAS");
 
-        List<EntityModel<PedidoDTO>> pedidos = pedidoService.obtenerPedidos().stream()
+        List<PedidoDTO> listaDtos = pedidoService.obtenerPedidos();
+
+        List<EntityModel<PedidoDTO>> pedidos = listaDtos.stream()
                 .map(pedido -> EntityModel.of(pedido,
                         linkTo(methodOn(PedidoController.class).obtenerPorId(pedido.getId())).withSelfRel(),
                         linkTo(methodOn(PedidoController.class).obtenerTotalPedido(pedido.getId())).withRel("total-pedido")))
@@ -76,6 +78,7 @@ public class PedidoController {
 
     @PutMapping("/pedidos/{id}")
     @Operation(summary = "Actualizar un pedido", description = "Modifica los datos de un pedido existente")
+    @ApiResponse(responseCode = "200", description = "Pedido actualizado con éxito")
     public ResponseEntity<EntityModel<PedidoDTO>> actualizar(@PathVariable Integer id, @Valid @RequestBody PedidoDTO dto) {
         log.info("[Pedido Controller] Iniciando actualizar");
         return pedidoService.actualizarPorId(id, dto)
@@ -86,6 +89,7 @@ public class PedidoController {
 
     @DeleteMapping("/pedidos/{id}")
     @Operation(summary = "Eliminar un pedido", description = "Remueve un pedido permanentemente")
+    @ApiResponse(responseCode = "204", description = "Pedido eliminado con éxito")
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
         log.info("[Pedido Controller] Iniciando eliminar");
         boolean eliminado = pedidoService.eliminarPorId(id);
@@ -94,6 +98,7 @@ public class PedidoController {
 
     @GetMapping("/pedidos/{id}/total")
     @Operation(summary = "Obtener total monetario del pedido", description = "Calcula el coste total de los elementos del pedido")
+    @ApiResponse(responseCode = "200", description = "Total calculado con éxito")
     public ResponseEntity<Double> obtenerTotalPedido(@PathVariable Integer id) {
         log.info("[Pedido Controller] Iniciando obtenerTotalPedido");
         return ResponseEntity.ok(pedidoService.obtenerTotalPedido(id));
