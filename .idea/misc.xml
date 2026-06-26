@@ -13,6 +13,8 @@
         <option value="$PROJECT_DIR$/inventario/pom.xml" />
         <option value="$PROJECT_DIR$/ms-pedidos/ms-pedidos/pom.xml" />
         <option value="$PROJECT_DIR$/pagos/pom.xml" />
+        <option value="$PROJECT_DIR$/pedidos/pom.xml" />
+        <option value="$PROJECT_DIR$/productos/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
