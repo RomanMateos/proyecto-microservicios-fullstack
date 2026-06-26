@@ -7,17 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="eureka-server" />
         <module name="empleados" />
         <module name="ms-pedidos (1)" />
-      </profile>
-      <profile name="Annotation profile for productos" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
-        </processorPath>
-        <module name="productos" />
       </profile>
       <profile name="Annotation profile for ms-proveedores" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -49,6 +41,16 @@
         </processorPath>
         <module name="pagos" />
       </profile>
+      <profile name="Annotation profile for gateway" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+        </processorPath>
+        <module name="productos" />
+        <module name="gateway" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ms-pedidos" target="17" />
@@ -59,6 +61,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Usuario" options="-parameters" />
       <module name="empleados" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="inventario" options="-parameters" />
       <module name="ms-pedidos" options="-parameters" />
       <module name="ms-pedidos (1)" options="-parameters" />

@@ -4,6 +4,7 @@ import com.fullstackev2.pedidos.dto.PedidoDTO;
 import com.fullstackev2.pedidos.service.PedidoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -22,15 +23,15 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
-@Tag(name = "Pedidos", description = "Operaciones CRUD y enlaces hipermedia de Pedidos")
+@Tag(name = "ms-pedidos", description = "Operaciones CRUD, documentación OpenAPI y enlaces hipermedia de Pedidos")
 public class PedidoController {
 
     @Autowired
     private PedidoService pedidoService;
 
     @GetMapping("/pedidos")
-    @Operation(summary = "Listar todos los pedidos", description = "Obtiene los pedidos con enlaces hipermedia")
-    @ApiResponse(responseCode = "200", description = "Pedidos obtenidos correctamente")
+    @Operation(summary = "Listar todos los pedidos", description = "Obtiene una lista de todos los pedidos registrados junto con sus enlaces HATEOAS correspondientes.")
+    @ApiResponse(responseCode = "200", description = "Lista de pedidos obtenida correctamente")
     public ResponseEntity<CollectionModel<EntityModel<PedidoDTO>>> listarTodos() {
         log.info("[Pedido Controller] Iniciando lista de pedidos con HATEOAS");
 
@@ -49,8 +50,11 @@ public class PedidoController {
     }
 
     @GetMapping("/pedidos/{id}")
-    @Operation(summary = "Obtener pedido por ID", description = "Obtiene un único pedido agregando enlaces HATEOAS")
-    @ApiResponse(responseCode = "200", description = "Pedido encontrado")
+    @Operation(summary = "Obtener pedido por ID", description = "Busca un único pedido según su identificador único y genera enlaces dinámicos.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pedido encontrado y procesado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "El ID del pedido solicitado no existe en la base de datos")
+    })
     public ResponseEntity<EntityModel<PedidoDTO>> obtenerPorId(@PathVariable Integer id) {
         log.info("[Pedido Controller] Iniciando obtenerPorId con HATEOAS");
         PedidoDTO dto = pedidoService.buscarPorId(id);
@@ -64,8 +68,11 @@ public class PedidoController {
     }
 
     @PostMapping("/pedidos")
-    @Operation(summary = "Crear nuevo pedido", description = "Registra un pedido y retorna su enlace de consulta")
-    @ApiResponse(responseCode = "201", description = "Pedido creado con éxito")
+    @Operation(summary = "Crear nuevo pedido", description = "Registra un nuevo pedido en el sistema, validando los datos obligatorios entrantes.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Pedido creado de manera exitosa"),
+            @ApiResponse(responseCode = "400", description = "Datos de entrada inválidos o mal estructurados")
+    })
     public ResponseEntity<EntityModel<PedidoDTO>> crear(@Valid @RequestBody PedidoDTO dto) {
         log.info("[Pedido Controller] Iniciando crear con HATEOAS");
         PedidoDTO creado = pedidoService.guardar(dto);
@@ -77,8 +84,11 @@ public class PedidoController {
     }
 
     @PutMapping("/pedidos/{id}")
-    @Operation(summary = "Actualizar un pedido", description = "Modifica los datos de un pedido existente")
-    @ApiResponse(responseCode = "200", description = "Pedido actualizado con éxito")
+    @Operation(summary = "Actualizar un pedido", description = "Modifica todos los atributos editables de un pedido existente identificado por su ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pedido actualizado de forma exitosa"),
+            @ApiResponse(responseCode = "404", description = "No se pudo actualizar debido a que el ID del pedido no existe")
+    })
     public ResponseEntity<EntityModel<PedidoDTO>> actualizar(@PathVariable Integer id, @Valid @RequestBody PedidoDTO dto) {
         log.info("[Pedido Controller] Iniciando actualizar");
         return pedidoService.actualizarPorId(id, dto)
@@ -88,8 +98,11 @@ public class PedidoController {
     }
 
     @DeleteMapping("/pedidos/{id}")
-    @Operation(summary = "Eliminar un pedido", description = "Remueve un pedido permanentemente")
-    @ApiResponse(responseCode = "204", description = "Pedido eliminado con éxito")
+    @Operation(summary = "Eliminar un pedido", description = "Remueve físicamente el registro de un pedido del sistema mediante su ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Pedido removido correctamente del sistema"),
+            @ApiResponse(responseCode = "404", description = "No se encontró el pedido correspondiente al ID enviado")
+    })
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
         log.info("[Pedido Controller] Iniciando eliminar");
         boolean eliminado = pedidoService.eliminarPorId(id);
@@ -97,8 +110,11 @@ public class PedidoController {
     }
 
     @GetMapping("/pedidos/{id}/total")
-    @Operation(summary = "Obtener total monetario del pedido", description = "Calcula el coste total de los elementos del pedido")
-    @ApiResponse(responseCode = "200", description = "Total calculado con éxito")
+    @Operation(summary = "Obtener total monetario del pedido", description = "Calcula el costo total consultando síncronamente el precio real de cada ítem al microservicio de productos vía Feign.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Monto monetario total calculado y devuelto con éxito"),
+            @ApiResponse(responseCode = "404", description = "No se encontró el pedido o algún producto relacionado")
+    })
     public ResponseEntity<Double> obtenerTotalPedido(@PathVariable Integer id) {
         log.info("[Pedido Controller] Iniciando obtenerTotalPedido");
         return ResponseEntity.ok(pedidoService.obtenerTotalPedido(id));

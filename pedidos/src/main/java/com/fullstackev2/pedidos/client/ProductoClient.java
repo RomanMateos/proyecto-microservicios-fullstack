@@ -11,5 +11,6 @@ public interface ProductoClient {
     @GetMapping("/api/v1/productos/{id}")
     ProductoDTO getProductoById(@PathVariable Integer id);
 
-    ProductoDTO obtenerProductoPorId(Integer productoId);
+    @GetMapping("/api/v1/productos/{productoId}")
+    ProductoDTO obtenerProductoPorId(@PathVariable Integer productoId); // <-- Y el @PathVariable
 }
