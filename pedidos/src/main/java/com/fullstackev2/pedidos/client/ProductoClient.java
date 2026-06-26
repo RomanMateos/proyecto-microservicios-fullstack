@@ -10,4 +10,6 @@ public interface ProductoClient {
 
     @GetMapping("/api/v1/productos/{id}")
     ProductoDTO getProductoById(@PathVariable Integer id);
+
+    ProductoDTO obtenerProductoPorId(Integer productoId);
 }
