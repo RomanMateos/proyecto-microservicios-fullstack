@@ -4,6 +4,7 @@ import com.fullstackev2.pagos.dto.PagoDTO;
 import com.fullstackev2.pagos.service.PagoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +23,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Slf4j
 @RestController
 @RequestMapping("api/v1")
-@Tag(name = "Pagos", description = "Operaciones CRUD y enlaces hipermedia de Pagos")
+@Tag(name = "ms-pagos", description = "Operaciones CRUD, documentación OpenAPI y enlaces hipermedia de Pagos")
 public class PagoController {
 
     @Autowired
     private PagoService pagoService;
 
     @GetMapping("/pagos")
-    @Operation(summary = "Listar todos los pagos", description = "Obtiene los registros de pagos enriquecidos con enlaces HATEOAS")
+    @Operation(summary = "Listar todos los pagos", description = "Obtiene los registros de pagos enriquecidos con enlaces dinámicos HATEOAS.")
     @ApiResponse(responseCode = "200", description = "Pagos listados correctamente")
     public ResponseEntity<CollectionModel<EntityModel<PagoDTO>>> listarPagos() {
         log.info("[Pago Controller] Iniciando obtencion de pagos con HATEOAS");
@@ -46,9 +47,11 @@ public class PagoController {
     }
 
     @GetMapping("/pagos/{id}")
-    @Operation(summary = "Buscar pago por ID", description = "Obtiene los detalles de un pago individual con hiperenlaces")
-    @ApiResponse(responseCode = "200", description = "Pago localizado")
-    @ApiResponse(responseCode = "404", description = "Pago no encontrado")
+    @Operation(summary = "Buscar pago por ID", description = "Obtiene los detalles de un pago individual asociado a un hiperenlace.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pago localizado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "El ID del pago solicitado no existe")
+    })
     public ResponseEntity<EntityModel<PagoDTO>> buscarPorId(@PathVariable Integer id) {
         log.info("[Pago Controller] Iniciando obtencion de pago individual");
         return pagoService.buscarPorId(id)
@@ -59,7 +62,11 @@ public class PagoController {
     }
 
     @PostMapping("/pagos")
-    @Operation(summary = "Registrar un pago", description = "Crea un nuevo comprobante de pago")
+    @Operation(summary = "Registrar un pago", description = "Crea un nuevo comprobante de pago en el sistema validando la estructura del DTO.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Pago registrado con éxito"),
+            @ApiResponse(responseCode = "400", description = "Cuerpo de la petición inválido o mal estructurado")
+    })
     public ResponseEntity<EntityModel<PagoDTO>> guardar(@Valid @RequestBody PagoDTO pagoDTO) {
         log.info("[Pago Controller] Iniciando guardar pago");
         PagoDTO creado = pagoService.guardar(pagoDTO);
@@ -71,7 +78,11 @@ public class PagoController {
     }
 
     @PutMapping("/pagos/{id}")
-    @Operation(summary = "Actualizar pago por ID", description = "Modifica los valores registrados de un pago")
+    @Operation(summary = "Actualizar pago por ID", description = "Modifica los valores de un pago existente referenciado por su identificador único.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pago modificado de forma exitosa"),
+            @ApiResponse(responseCode = "404", description = "No se pudo actualizar porque el ID de pago no existe")
+    })
     public ResponseEntity<EntityModel<PagoDTO>> actualizar(@PathVariable Integer id, @Valid @RequestBody PagoDTO pago) {
         log.info("[Pago Controller] Iniciando actualizar");
         return pagoService.actualizarPorId(id, pago)
@@ -81,7 +92,11 @@ public class PagoController {
     }
 
     @DeleteMapping("/pagos/{id}")
-    @Operation(summary = "Eliminar un registro de pago")
+    @Operation(summary = "Eliminar un registro de pago", description = "Remueve físicamente el registro del pago correspondiente al ID proveído.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Registro de pago eliminado correctamente"),
+            @ApiResponse(responseCode = "404", description = "No se encontró el registro para eliminar")
+    })
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
         log.info("[Pago Controller] Iniciando eliminar");
         boolean eliminado = pagoService.eliminarPorId(id);
@@ -89,9 +104,20 @@ public class PagoController {
     }
 
     @GetMapping("/pagos/totales")
-    @Operation(summary = "Filtrar pagos por condiciones", description = "Retorna una lista filtrada por monto y estado de aceptación")
-    public ResponseEntity<List<PagoDTO>> obtenerTotales(@RequestParam Double monto, @RequestParam Boolean aceptado) {
-        log.info("[Pago Controller] Iniciando obtencion de pagos filtrados");
-        return ResponseEntity.ok(pagoService.buscarPagos(monto, aceptado));
+    @Operation(summary = "Filtrar pagos por condiciones", description = "Retorna una lista enriquecida con enlaces hipermedia filtrando por monto mínimo y estado de aceptación.")
+    @ApiResponse(responseCode = "200", description = "Filtro de pagos completado con éxito")
+    public ResponseEntity<CollectionModel<EntityModel<PagoDTO>>> obtenerTotales(@RequestParam Double monto, @RequestParam Boolean aceptado) {
+        log.info("[Pago Controller] Iniciando obtencion de pagos filtrados con HATEOAS");
+        List<PagoDTO> filtrados = pagoService.buscarPagos(monto, aceptado);
+
+        List<EntityModel<PagoDTO>> recursos = filtrados.stream()
+                .map(pago -> EntityModel.of(pago,
+                        linkTo(methodOn(PagoController.class).buscarPorId(pago.getId())).withSelfRel()))
+                .toList();
+
+        CollectionModel<EntityModel<PagoDTO>> coleccion = CollectionModel.of(recursos,
+                linkTo(methodOn(PagoController.class).obtenerTotales(monto, aceptado)).withSelfRel());
+
+        return ResponseEntity.ok(coleccion);
     }
 }
