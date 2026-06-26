@@ -2,7 +2,7 @@ package com.fullstackev2.pedidos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.openfeign.EnableFeignClients; // <-- Asegúrate de importar esto
 
 @SpringBootApplication
 @EnableFeignClients
