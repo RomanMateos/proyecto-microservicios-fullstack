@@ -10,24 +10,36 @@
         <module name="ms-pedidos" />
         <module name="empleados" />
       </profile>
-      <profile name="Annotation profile for ms-proveedores" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
-        </processorPath>
-        <module name="proveedores" />
-      </profile>
       <profile name="Annotation profile for sucursales" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="reportes" />
         <module name="sucursales" />
+      </profile>
+      <profile name="Annotation profile for ms-proveedores" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+        </processorPath>
+        <module name="proveedores" />
+      </profile>
+      <profile name="Annotation profile for pagos" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
+        </processorPath>
+        <module name="pagos" />
+        <module name="inventario" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -38,7 +50,9 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Usuario" options="-parameters" />
       <module name="empleados" options="-parameters" />
+      <module name="inventario" options="-parameters" />
       <module name="ms-pedidos" options="-parameters" />
+      <module name="pagos" options="-parameters" />
       <module name="proveedores" options="-parameters" />
       <module name="reportes" options="-parameters" />
       <module name="sucursales" options="-parameters" />
