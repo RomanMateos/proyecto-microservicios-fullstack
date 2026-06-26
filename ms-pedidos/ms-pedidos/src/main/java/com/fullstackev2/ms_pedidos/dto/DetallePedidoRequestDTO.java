@@ -1,0 +1,33 @@
+package com.fullstackev2.ms_pedidos.dto;
+
+import jakarta.validation.constraints.*;
+import lombok.*;
+import java.time.LocalDate;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class DetallePedidoRequestDTO {
+
+    @NotBlank(message = "El nombre del producto es obligatorio")
+    @Size(min = 2, max = 100)
+    private String nombreProducto;
+
+    @Min(value = 1, message = "La cantidad debe ser al menos 1")
+    private Integer cantidad;
+
+    @Positive(message = "El precio debe ser positivo")
+    private Double precioUnitario;
+
+    private boolean activo;
+
+    @NotNull
+    @PastOrPresent
+    private LocalDate fechaAgregado;
+
+    @NotNull
+    private Integer productoId;
+
+    @NotNull
+    private Integer pedidoId;
+}
