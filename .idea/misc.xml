@@ -6,6 +6,17 @@
       <list>
         <option value="$PROJECT_DIR$/Usuario/pom.xml" />
         <option value="$PROJECT_DIR$/pedidos/pedidos/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-proveedores/proveedores/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-sucursales/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-empleados/empleados/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-reportes/reportes/pom.xml" />
+        <option value="$PROJECT_DIR$/inventario/pom.xml" />
+        <option value="$PROJECT_DIR$/ms-pedidos/ms-pedidos/pom.xml" />
+        <option value="$PROJECT_DIR$/pagos/pom.xml" />
+        <option value="$PROJECT_DIR$/productos/pom.xml" />
+        <option value="$PROJECT_DIR$/pedidos/pom.xml" />
+        <option value="$PROJECT_DIR$/eureka-server/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
