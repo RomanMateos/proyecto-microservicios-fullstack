@@ -15,4 +15,5 @@ public class SucursalResponseDTO {
     private boolean activo;
     private LocalDate fechaApertura;
     private Integer regionId;
+    private String categoria;   // PRUEBA 3 — sin validación, es solo salida de datos
 }

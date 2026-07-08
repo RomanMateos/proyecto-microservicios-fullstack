@@ -20,6 +20,7 @@ public class SucursalMapper {
         dto.setActivo(s.isActivo());
         dto.setFechaApertura(s.getFechaApertura());
         dto.setRegionId(s.getRegion().getRegionId());
+        dto.setCategoria(s.getCategoria());   // PRUEBA 4  — lee del modelo, escribe al DTO de salida
         return dto;
     }
 
@@ -33,6 +34,7 @@ public class SucursalMapper {
         s.setActivo(dto.getActivo());
         s.setFechaApertura(dto.getFechaApertura());
         s.setRegion(region);
+        s.setCategoria(dto.getCategoria());   // PRUEBA 4 — lee del DTO de entrada, escribe al modelo
         return s;
     }
 }

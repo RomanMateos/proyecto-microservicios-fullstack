@@ -36,5 +36,9 @@ public class Sucursal {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id", nullable = false)
-    private Region region;
+    private com.fullstackev2.sucursales.model.Region region;
+
+    // PRUEBA: categoría comercial de la sucursal
+    @Column(name = "categoria", length = 20)
+    private String categoria;
 }

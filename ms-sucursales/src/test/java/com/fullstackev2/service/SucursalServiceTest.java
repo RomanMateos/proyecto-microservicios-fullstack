@@ -71,7 +71,7 @@ class SucursalServiceTest {
         sucursal.setFechaApertura(LocalDate.of(2021, 3, 15));
         sucursal.setRegion(region);
 
-        // DTO de entrada
+// DTO de entrada
         requestDTO = new SucursalRequestDTO(
                 "Sucursal Santiago Centro",
                 "Av. Libertador 1234",
@@ -79,10 +79,11 @@ class SucursalServiceTest {
                 50,
                 true,
                 LocalDate.of(2021, 3, 15),
-                1
+                1,
+                "MALL"          // <-- DE LA PRUEBA: 8vo argumento, debe ser uno de los 4 valores del @Pattern
         );
 
-        // DTO de salida
+// DTO de salida
         responseDTO = new SucursalResponseDTO(
                 1,
                 "Sucursal Santiago Centro",
@@ -91,7 +92,8 @@ class SucursalServiceTest {
                 50,
                 true,
                 LocalDate.of(2021, 3, 15),
-                1
+                1,
+                "MALL"          // <-- DE LA PRUEBA: 8vo argumento
         );
     }
 

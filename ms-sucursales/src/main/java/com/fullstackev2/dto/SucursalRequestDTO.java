@@ -34,4 +34,10 @@ public class SucursalRequestDTO {
     @NotNull(message = "El ID de region es obligatorio")
     @Positive(message = "El ID de region debe ser positivo")
     private Integer regionId;
+
+    // PRUEBA 2: whitelist validation — mismo patrón que PagoDTO.metodoPago en pagos/
+    @NotBlank(message = "La categoria es obligatoria")
+    @Pattern(regexp = "MALL|CENTRO|STRIP|FLAGSHIP",
+            message = "Categoria invalida. Valores permitidos: MALL, CENTRO, STRIP, FLAGSHIP")
+    private String categoria;
 }
