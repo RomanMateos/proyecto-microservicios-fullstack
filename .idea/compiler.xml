@@ -7,8 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="eureka-server" />
         <module name="empleados" />
+        <module name="ms-pedidos" />
+        <module name="eureka-server" />
         <module name="ms-pedidos (1)" />
       </profile>
       <profile name="Annotation profile for ms-proveedores" enabled="true">
@@ -29,7 +30,15 @@
         </processorPath>
         <module name="reportes" />
         <module name="sucursales" />
-        <module name="inventario" />
+      </profile>
+      <profile name="Annotation profile for gateway" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+        </processorPath>
+        <module name="gateway" />
       </profile>
       <profile name="Annotation profile for pagos" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -40,20 +49,20 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
         <module name="pagos" />
+        <module name="inventario" />
       </profile>
-      <profile name="Annotation profile for gateway" enabled="true">
+      <profile name="Annotation profile for productos" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
         <module name="productos" />
-        <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ms-pedidos" target="17" />
       <module name="Usuario" target="17" />
     </bytecodeTargetLevel>
   </component>
