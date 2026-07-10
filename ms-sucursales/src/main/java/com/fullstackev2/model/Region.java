@@ -37,5 +37,5 @@ public class Region {
 
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<Sucursal> sucursales;
+    private List<com.fullstackev2.sucursales.model.Sucursal> sucursales;
 }

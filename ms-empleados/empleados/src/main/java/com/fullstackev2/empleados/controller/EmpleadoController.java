@@ -11,6 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+// IMPORTS DE HATEOAS
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/api/v1/empleados")
 @RequiredArgsConstructor
@@ -22,14 +26,25 @@ public class EmpleadoController {
     @GetMapping
     public ResponseEntity<List<EmpleadoResponseDTO>> listarTodos() {
         log.info("[EmpleadoController] GET /api/v1/empleados");
-        return ResponseEntity.ok(empleadoService.listarTodos());
+        List<EmpleadoResponseDTO> lista = empleadoService.listarTodos();
+
+        lista.forEach(dto ->
+                dto.add(linkTo(methodOn(EmpleadoController.class).buscarPorId(dto.getEmpleadoId())).withSelfRel())
+        );
+
+        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<EmpleadoResponseDTO> buscarPorId(@PathVariable Integer id) {
         log.info("[EmpleadoController] GET /api/v1/empleados/{}", id);
         EmpleadoResponseDTO dto = empleadoService.buscarPorId(id);
+
         if (dto == null) return ResponseEntity.notFound().build();
+
+        dto.add(linkTo(methodOn(EmpleadoController.class).buscarPorId(id)).withSelfRel());
+        dto.add(linkTo(methodOn(EmpleadoController.class).listarTodos()).withRel("todos-los-empleados"));
+
         return ResponseEntity.ok(dto);
     }
 
@@ -38,13 +53,23 @@ public class EmpleadoController {
             @RequestParam Integer sucursalId,
             @RequestParam Integer anio) {
         log.info("[EmpleadoController] GET /buscar?sucursalId={}&anio={}", sucursalId, anio);
-        return ResponseEntity.ok(empleadoService.buscarPorSucursalYAnio(sucursalId, anio));
+        List<EmpleadoResponseDTO> lista = empleadoService.buscarPorSucursalYAnio(sucursalId, anio);
+
+        lista.forEach(dto ->
+                dto.add(linkTo(methodOn(EmpleadoController.class).buscarPorId(dto.getEmpleadoId())).withSelfRel())
+        );
+
+        return ResponseEntity.ok(lista);
     }
 
     @PostMapping
     public ResponseEntity<EmpleadoResponseDTO> crear(@Valid @RequestBody EmpleadoRequestDTO dto) {
         log.info("[EmpleadoController] POST /api/v1/empleados");
-        return ResponseEntity.status(HttpStatus.CREATED).body(empleadoService.guardar(dto));
+        EmpleadoResponseDTO creado = empleadoService.guardar(dto);
+
+        creado.add(linkTo(methodOn(EmpleadoController.class).buscarPorId(creado.getEmpleadoId())).withSelfRel());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
     @PutMapping("/{id}")
@@ -53,7 +78,11 @@ public class EmpleadoController {
             @Valid @RequestBody EmpleadoRequestDTO dto) {
         log.info("[EmpleadoController] PUT /api/v1/empleados/{}", id);
         EmpleadoResponseDTO actualizado = empleadoService.actualizar(id, dto);
+
         if (actualizado == null) return ResponseEntity.notFound().build();
+
+        actualizado.add(linkTo(methodOn(EmpleadoController.class).buscarPorId(actualizado.getEmpleadoId())).withSelfRel());
+
         return ResponseEntity.ok(actualizado);
     }
 
